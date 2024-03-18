@@ -209,16 +209,18 @@ def is_pt_tf_cross_test(test_case):
     to a truthy value and selecting the is_pt_tf_cross_test pytest mark.
 
     """
-    if not _run_pt_tf_cross_tests or not is_torch_available() or not is_tf_available():
-        return unittest.skip("test is PT+TF test")(test_case)
-    else:
-        try:
-            import pytest  # We don't need a hard dependency on pytest in the main library
-        except ImportError:
-            return test_case
-        else:
-            return pytest.mark.is_pt_tf_cross_test()(test_case)
-
+    # if not _run_pt_tf_cross_tests or not is_torch_available() or not is_tf_available():
+    #     return unittest.skip("test is PT+TF test")(test_case)
+    # else:
+    #     try:
+    #         import pytest  # We don't need a hard dependency on pytest in the main library
+    #     except ImportError:
+    #         return test_case
+    #     else:
+    #         return pytest.mark.is_pt_tf_cross_test()(test_case)
+    import pytest
+    return pytest.mark.is_pt_tf_cross_test()(test_case)
+    
 
 def is_pt_flax_cross_test(test_case):
     """
@@ -228,16 +230,18 @@ def is_pt_flax_cross_test(test_case):
     variable to a truthy value and selecting the is_pt_flax_cross_test pytest mark.
 
     """
-    if not _run_pt_flax_cross_tests or not is_torch_available() or not is_flax_available():
-        return unittest.skip("test is PT+FLAX test")(test_case)
-    else:
-        try:
-            import pytest  # We don't need a hard dependency on pytest in the main library
-        except ImportError:
-            return test_case
-        else:
-            return pytest.mark.is_pt_flax_cross_test()(test_case)
-
+    # if not _run_pt_flax_cross_tests or not is_torch_available() or not is_flax_available():
+    #     return unittest.skip("test is PT+FLAX test")(test_case)
+    # else:
+        # try:
+        #     import pytest  # We don't need a hard dependency on pytest in the main library
+        # except ImportError:
+        #     return test_case
+        # else:
+        #     return pytest.mark.is_pt_flax_cross_test()(test_case)
+    import pytest
+    return pytest.mark.is_pt_flax_cross_test()(test_case)
+    
 
 def is_staging_test(test_case):
     """
@@ -547,14 +551,20 @@ def require_tf(test_case):
     """
     Decorator marking a test that requires TensorFlow. These tests are skipped when TensorFlow isn't installed.
     """
-    return unittest.skipUnless(is_tf_available(), "test requires TensorFlow")(test_case)
+    import pytest
+    return pytest.mark.require_tf()(test_case)
+
+    #return unittest.skipUnless(is_tf_available(), "test requires TensorFlow")(test_case)
 
 
 def require_flax(test_case):
     """
     Decorator marking a test that requires JAX & Flax. These tests are skipped when one / both are not installed
     """
-    return unittest.skipUnless(is_flax_available(), "test requires JAX & Flax")(test_case)
+    import pytest
+    return pytest.mark.require_flax()(test_case)
+
+    #return unittest.skipUnless(is_flax_available(), "test requires JAX & Flax")(test_case)
 
 
 def require_sentencepiece(test_case):
@@ -667,12 +677,16 @@ def require_torch_multi_gpu(test_case):
 
     To run *only* the multi_gpu tests, assuming all test names contain multi_gpu: $ pytest -sv ./tests -k "multi_gpu"
     """
-    if not is_torch_available():
-        return unittest.skip("test requires PyTorch")(test_case)
+    import pytest
+    return pytest.mark.require_torch_multi_gpu()(test_case)
+        
+        
+    # if not is_torch_available():
+    #     return unittest.skip("test requires PyTorch")(test_case)
 
-    import torch
+    # import torch
 
-    return unittest.skipUnless(torch.cuda.device_count() > 1, "test requires multiple GPUs")(test_case)
+    # return unittest.skipUnless(torch.cuda.device_count() > 1, "test requires multiple GPUs")(test_case)
 
 
 def require_torch_multi_accelerator(test_case):
@@ -693,12 +707,15 @@ def require_torch_non_multi_gpu(test_case):
     """
     Decorator marking a test that requires 0 or 1 GPU setup (in PyTorch).
     """
-    if not is_torch_available():
-        return unittest.skip("test requires PyTorch")(test_case)
+    import pytest
+    return pytest.mark.require_torch_multi_gpu()(test_case)
 
-    import torch
+    # if not is_torch_available():
+    #     return unittest.skip("test requires PyTorch")(test_case)
 
-    return unittest.skipUnless(torch.cuda.device_count() < 2, "test requires 0 or 1 GPU")(test_case)
+    # import torch
+
+    # return unittest.skipUnless(torch.cuda.device_count() < 2, "test requires 0 or 1 GPU")(test_case)
 
 
 def require_torch_non_multi_accelerator(test_case):
@@ -715,12 +732,15 @@ def require_torch_up_to_2_gpus(test_case):
     """
     Decorator marking a test that requires 0 or 1 or 2 GPU setup (in PyTorch).
     """
-    if not is_torch_available():
-        return unittest.skip("test requires PyTorch")(test_case)
+    import pytest
+    return pytest.mark.require_torch_up_to_2_gpus()(test_case)
 
-    import torch
+    # if not is_torch_available():
+    #     return unittest.skip("test requires PyTorch")(test_case)
 
-    return unittest.skipUnless(torch.cuda.device_count() < 3, "test requires 0 or 1 or 2 GPUs")(test_case)
+    # import torch
+
+    # return unittest.skipUnless(torch.cuda.device_count() < 3, "test requires 0 or 1 or 2 GPUs")(test_case)
 
 
 def require_torch_up_to_2_accelerators(test_case):
@@ -738,23 +758,32 @@ def require_torch_xla(test_case):
     """
     Decorator marking a test that requires TorchXLA (in PyTorch).
     """
-    return unittest.skipUnless(is_torch_xla_available(), "test requires TorchXLA")(test_case)
+    import pytest
+    return pytest.mark.require_torch_xla()(test_case)
+
+    #return unittest.skipUnless(is_torch_xla_available(), "test requires TorchXLA")(test_case)
 
 
 def require_torch_neuroncore(test_case):
     """
     Decorator marking a test that requires NeuronCore (in PyTorch).
     """
-    return unittest.skipUnless(is_torch_neuroncore_available(check_device=False), "test requires PyTorch NeuronCore")(
-        test_case
-    )
+    import pytest
+    return pytest.mark.require_torch_neuroncore()(test_case)
+
+    # return unittest.skipUnless(is_torch_neuroncore_available(check_device=False), "test requires PyTorch NeuronCore")(
+    #     test_case
+    # )
 
 
 def require_torch_npu(test_case):
     """
     Decorator marking a test that requires NPU (in PyTorch).
     """
-    return unittest.skipUnless(is_torch_npu_available(), "test requires PyTorch NPU")(test_case)
+    import pytest 
+    return pytest.mark.require_torch_npu()(test_case)
+    
+    #return unittest.skipUnless(is_torch_npu_available(), "test requires PyTorch NPU")(test_case)
 
 
 def require_torch_multi_npu(test_case):
@@ -764,10 +793,12 @@ def require_torch_multi_npu(test_case):
 
     To run *only* the multi_npu tests, assuming all test names contain multi_npu: $ pytest -sv ./tests -k "multi_npu"
     """
-    if not is_torch_npu_available():
-        return unittest.skip("test requires PyTorch NPU")(test_case)
+    import pytest 
+    return pytest.mark.require_torch_multi_npu()(test_case)
+    # if not is_torch_npu_available():
+    #     return unittest.skip("test requires PyTorch NPU")(test_case)
 
-    return unittest.skipUnless(torch.npu.device_count() > 1, "test requires multiple NPUs")(test_case)
+    # return unittest.skipUnless(torch.npu.device_count() > 1, "test requires multiple NPUs")(test_case)
 
 
 def require_torch_xpu(test_case):
@@ -858,12 +889,17 @@ def require_torchdynamo(test_case):
 
 def require_torch_tensorrt_fx(test_case):
     """Decorator marking a test that requires Torch-TensorRT FX"""
-    return unittest.skipUnless(is_torch_tensorrt_fx_available(), "test requires Torch-TensorRT FX")(test_case)
+    import pytest 
+    return pytest.mark.require_torch_tensorrt_fx()(test_case)
+
+    #return unittest.skipUnless(is_torch_tensorrt_fx_available(), "test requires Torch-TensorRT FX")(test_case)
 
 
 def require_torch_gpu(test_case):
     """Decorator marking a test that requires CUDA and PyTorch."""
-    return unittest.skipUnless(torch_device == "cuda", "test requires CUDA")(test_case)
+    import pytest
+    return pytest.mark.require_torch_gpu()(test_case)
+    # return unittest.skipUnless(torch_device == "cuda", "test requires CUDA")(test_case)
 
 
 def require_torch_accelerator(test_case):
@@ -889,10 +925,13 @@ def require_torch_bf16(test_case):
 
 def require_torch_bf16_gpu(test_case):
     """Decorator marking a test that requires torch>=1.10, using Ampere GPU or newer arch with cuda>=11.0"""
-    return unittest.skipUnless(
-        is_torch_bf16_gpu_available(),
-        "test requires torch>=1.10, using Ampere GPU or newer arch with cuda>=11.0",
-    )(test_case)
+    import pytest
+    return pytest.mark.require_torch_bf16_gpu()(test_case)
+
+    # return unittest.skipUnless(
+    #     is_torch_bf16_gpu_available(),
+    #     "test requires torch>=1.10, using Ampere GPU or newer arch with cuda>=11.0",
+    # )(test_case)
 
 
 def require_torch_bf16_cpu(test_case):
@@ -905,9 +944,11 @@ def require_torch_bf16_cpu(test_case):
 
 def require_torch_tf32(test_case):
     """Decorator marking a test that requires Ampere or a newer GPU arch, cuda>=11 and torch>=1.7."""
-    return unittest.skipUnless(
-        is_torch_tf32_available(), "test requires Ampere or a newer GPU arch, cuda>=11 and torch>=1.7"
-    )(test_case)
+    import pytest
+    return pytest.mark.require_torch_tf32()(test_case)
+    # return unittest.skipUnless(
+    #     is_torch_tf32_available(), "test requires Ampere or a newer GPU arch, cuda>=11 and torch>=1.7"
+    # )(test_case)
 
 
 def require_detectron2(test_case):
@@ -991,7 +1032,10 @@ def require_apex(test_case):
     """
     Decorator marking a test that requires apex
     """
-    return unittest.skipUnless(is_apex_available(), "test requires apex")(test_case)
+    import pytest
+    return pytest.mark.require_apex()(test_case)
+
+    #return unittest.skipUnless(is_apex_available(), "test requires apex")(test_case)
 
 
 def require_aqlm(test_case):
@@ -1005,15 +1049,18 @@ def require_bitsandbytes(test_case):
     """
     Decorator marking a test that requires the bitsandbytes library. Will be skipped when the library or its hard dependency torch is not installed.
     """
-    if is_bitsandbytes_available() and is_torch_available():
-        try:
-            import pytest
+    import pytest
+    return pytest.mark.require_bitsandbytes()(test_case)
 
-            return pytest.mark.bitsandbytes(test_case)
-        except ImportError:
-            return test_case
-    else:
-        return unittest.skip("test requires bitsandbytes and torch")(test_case)
+    # if is_bitsandbytes_available() and is_torch_available():
+    #     try:
+    #         import pytest
+
+    #         return pytest.mark.bitsandbytes(test_case)
+    #     except ImportError:
+    #         return test_case
+    # else:
+    #     return unittest.skip("test requires bitsandbytes and torch")(test_case)
 
 
 def require_optimum(test_case):
