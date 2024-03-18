@@ -34,3 +34,12 @@ markers = [
     "flash_attn_test: marks tests related to flash attention (deselect with '-m \"not flash_attn_test\"')",
     "bitsandbytes: select (or deselect with `not`) bitsandbytes integration tests",
 ]
+env = [
+    "RUN_SLOW = 1",
+    "TRANSFORMERS_TEST_DEVICE = xpu",
+    "TRANSFORMERS_TEST_DEVICE_SPEC = spec.py",
+    "RUN_PIPELINE_TESTS = True",
+    "RUN_PT_TF_CROSS_TESTS = False",
+    "RUN_PT_FLAX_CROSS_TESTS = False",
+    "OMP_NUM_THREADS = 1"
+]

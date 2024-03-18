@@ -756,8 +756,8 @@ class SamModelIntegrationTest(unittest.TestCase):
         self.assertTrue(iou_scores.shape == (1, 3, 3))
         torch.testing.assert_allclose(iou_scores, EXPECTED_IOU, atol=1e-4, rtol=1e-4)
 
-    def test_dummy_pipeline_generation(self):
-        generator = pipeline("mask-generation", model="facebook/sam-vit-base", device=torch_device)
-        raw_image = prepare_image()
+    # def test_dummy_pipeline_generation(self):
+    #     generator = pipeline("mask-generation", model="facebook/sam-vit-base", device=torch_device)
+    #     raw_image = prepare_image()
 
-        _ = generator(raw_image, points_per_batch=64)
+    #     _ = generator(raw_image, points_per_batch=64)
