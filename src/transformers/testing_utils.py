@@ -435,7 +435,10 @@ def require_natten(test_case):
     These tests are skipped when NATTEN isn't installed.
 
     """
-    return unittest.skipUnless(is_natten_available(), "test requires natten")(test_case)
+    import pytest
+    return pytest.mark.require_natten()(test_case)
+
+    #return unittest.skipUnless(is_natten_available(), "test requires natten")(test_case)
 
 
 def require_torch(test_case):
