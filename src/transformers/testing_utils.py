@@ -639,9 +639,12 @@ def require_pytorch_quantization(test_case):
     Decorator marking a test that requires PyTorch Quantization Toolkit. These tests are skipped when PyTorch
     Quantization Toolkit isn't installed.
     """
-    return unittest.skipUnless(is_pytorch_quantization_available(), "test requires PyTorch Quantization Toolkit")(
-        test_case
-    )
+    import pytest
+    return pytest.mark.require_pytorch_quantization()(test_case)
+
+    # return unittest.skipUnless(is_pytorch_quantization_available(), "test requires PyTorch Quantization Toolkit")(
+    #     test_case
+    # )
 
 
 def require_vision(test_case):
@@ -956,7 +959,9 @@ def require_torch_tf32(test_case):
 
 def require_detectron2(test_case):
     """Decorator marking a test that requires detectron2."""
-    return unittest.skipUnless(is_detectron2_available(), "test requires `detectron2`")(test_case)
+    import pytest
+    return pytest.mark.require_detectron2()(test_case)
+    #return unittest.skipUnless(is_detectron2_available(), "test requires `detectron2`")(test_case)
 
 
 def require_faiss(test_case):
