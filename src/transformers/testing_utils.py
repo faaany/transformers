@@ -458,7 +458,10 @@ def require_flash_attn(test_case):
     These tests are skipped when Flash Attention isn't installed.
 
     """
-    return unittest.skipUnless(is_flash_attn_2_available(), "test requires Flash Attention")(test_case)
+    import pytest
+    return pytest.mark.require_flash_attn()(test_case)
+
+    #return unittest.skipUnless(is_flash_attn_2_available(), "test requires Flash Attention")(test_case)
 
 
 def require_torch_sdpa(test_case):
@@ -986,7 +989,10 @@ def require_ray(test_case):
     These tests are skipped when Ray/tune isn't installed.
 
     """
-    return unittest.skipUnless(is_ray_available(), "test requires Ray/tune")(test_case)
+    import pytest
+    return pytest.mark.require_detectron2()(test_case)
+
+    #return unittest.skipUnless(is_ray_available(), "test requires Ray/tune")(test_case)
 
 
 def require_sigopt(test_case):
@@ -1050,7 +1056,9 @@ def require_aqlm(test_case):
     """
     Decorator marking a test that requires aqlm
     """
-    return unittest.skipUnless(is_aqlm_available(), "test requires aqlm")(test_case)
+    import pytest
+    return pytest.mark.require_aqlm()(test_case)
+    #return unittest.skipUnless(is_aqlm_available(), "test requires aqlm")(test_case)
 
 
 def require_bitsandbytes(test_case):
@@ -1089,21 +1097,28 @@ def require_auto_gptq(test_case):
     """
     Decorator for auto_gptq dependency
     """
-    return unittest.skipUnless(is_auto_gptq_available(), "test requires auto-gptq")(test_case)
+    import pytest
+    return pytest.mark.require_auto_gptq()(test_case)
+
+    #return unittest.skipUnless(is_auto_gptq_available(), "test requires auto-gptq")(test_case)
 
 
 def require_auto_awq(test_case):
     """
     Decorator for auto_awq dependency
     """
-    return unittest.skipUnless(is_auto_awq_available(), "test requires autoawq")(test_case)
+    import pytest
+    return pytest.mark.require_auto_awq()(test_case)
+    #return unittest.skipUnless(is_auto_awq_available(), "test requires autoawq")(test_case)
 
 
 def require_quanto(test_case):
     """
     Decorator for quanto dependency
     """
-    return unittest.skipUnless(is_quanto_available(), "test requires quanto")(test_case)
+    import pytest
+    return pytest.mark.require_quanto()(test_case)
+    #return unittest.skipUnless(is_quanto_available(), "test requires quanto")(test_case)
 
 
 def require_phonemizer(test_case):
