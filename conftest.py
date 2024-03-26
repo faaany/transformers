@@ -73,6 +73,7 @@ NOT_DEVICE_TESTS = {
     "/utils/",
     "/tools/",
     "/sagemaker/",
+    "/bettertransformer/"
 }
 
 # allow having multiple repository checkouts and not needing to remember to rerun

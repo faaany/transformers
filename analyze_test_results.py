@@ -63,7 +63,6 @@ def main(
         return df 
 
     all_df = replace_unittests(all_df)
-    print(all_df.shape)
     models_df = replace_unittests(models_df)
     # singles_df = replace_unittests(singles_df)
     
@@ -142,8 +141,12 @@ def main(
     all_df_tran = extrace_category(all_df_tran)
 
     all_df_tran = all_df_tran[['Category', 'Test Vector', 'PASS', 'FAIL', 'SKIP', 'TOTAL']]
+    print(all_df_tran.shape)
     # df_final = pd.concat([benchmark_tran, better_tran, deepspeed_tran, extended_tran, fsdp_tran, generation_tran, peft_tran, quantization_tran, trainer_tran, pipelines_tran, singles_tran, models_agg_tran])
-    all_df_tran.to_excel("df_stats.xlsx", index=False)
+    #all_df_tran.to_excel("df_stats.xlsx", index=False)
+    all_df_tran2 = all_df_tran.groupby(['Category']).agg({'PASS':'sum', 'FAIL': 'sum', 'SKIP': 'sum', 'TOTAL': 'sum'}).reset_index()  
+    #all_df_tran.to_excel("df_stats.xlsx", index=False)
+    all_df_tran2.to_excel("df_stats_v2.xlsx", index=False)
     
     models_skip_stats = models_df[models_df['result'] == 'SKIPPED']['message'].value_counts().reset_index()
     models_skip_stats.to_excel("df_models_skipped_stats.xlsx", index=False)
