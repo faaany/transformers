@@ -26,6 +26,7 @@ from transformers.testing_utils import (
     require_torch,
     require_torch_accelerator,
     require_torch_fp16,
+    require_bitsandbytes,
     slow,
     torch_device,
 )
@@ -400,6 +401,7 @@ class PersimmonModelTest(ModelTesterMixin, GenerationTesterMixin, PipelineTester
 @require_torch
 class PersimmonIntegrationTest(unittest.TestCase):
     @slow
+    @require_bitsandbytes
     def test_model_8b_chat_logits(self):
         input_ids = [1, 306, 4658, 278, 6593, 310, 2834, 338]
         model = PersimmonForCausalLM.from_pretrained(
@@ -427,6 +429,7 @@ class PersimmonIntegrationTest(unittest.TestCase):
     @slow
     @require_torch_accelerator
     @require_torch_fp16
+    @require_bitsandbytes
     def test_model_8b_chat_greedy_generation(self):
         EXPECTED_TEXT_COMPLETION = """human: Simply put, the theory of relativity states that?\n\nadept: The theory of relativity states that the laws of physics are the same for all observers, regardless of their relative motion."""
         prompt = "human: Simply put, the theory of relativity states that?\n\nadept:"
