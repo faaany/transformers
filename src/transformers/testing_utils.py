@@ -451,6 +451,11 @@ def require_torch(test_case):
     return unittest.skipUnless(is_torch_available(), "test requires PyTorch")(test_case)
 
 
+def require_auto(test_case):
+    import pytest
+    return pytest.mark.require_auto()(test_case)
+
+    
 def require_flash_attn(test_case):
     """
     Decorator marking a test that requires Flash Attention.

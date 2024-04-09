@@ -25,6 +25,7 @@ import requests
 from transformers import CONFIG_MAPPING, Blip2Config, Blip2QFormerConfig, Blip2VisionConfig
 from transformers.testing_utils import (
     require_torch,
+    require_auto,
     require_torch_multi_accelerator,
     require_vision,
     slow,
@@ -975,6 +976,7 @@ class Blip2ModelIntegrationTest(unittest.TestCase):
         self.assertEqual(generated_text, "it's not a city, it's a beach")
 
     @require_torch_multi_accelerator
+    @require_auto
     def test_inference_t5_multi_accelerator(self):
         processor = Blip2Processor.from_pretrained("Salesforce/blip2-flan-t5-xl")
         device_map = device_map = {
