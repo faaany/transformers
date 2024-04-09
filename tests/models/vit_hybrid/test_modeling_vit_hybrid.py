@@ -18,7 +18,7 @@
 import unittest
 
 from transformers import ViTHybridConfig
-from transformers.testing_utils import is_flaky, require_accelerate, require_torch, require_vision, slow, torch_device
+from transformers.testing_utils import is_flaky, require_accelerate, require_torch, require_vision, require_auto, slow, torch_device
 from transformers.utils import cached_property, is_torch_available, is_vision_available
 
 from ...test_configuration_common import ConfigTester
@@ -267,6 +267,7 @@ class ViTModelIntegrationTest(unittest.TestCase):
 
     @slow
     @require_accelerate
+    @require_auto
     def test_accelerate_inference(self):
         image_processor = ViTHybridImageProcessor.from_pretrained("google/vit-hybrid-base-bit-384")
         model = ViTHybridForImageClassification.from_pretrained("google/vit-hybrid-base-bit-384", device_map="auto")

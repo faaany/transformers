@@ -51,6 +51,7 @@ from transformers.testing_utils import (
     require_safetensors,
     require_tf,
     require_torch,
+    require_auto,
     require_torch_accelerator,
     require_torch_gpu,
     require_torch_multi_accelerator,
@@ -846,6 +847,7 @@ class ModelUtilsTest(TestCasePlus):
 
     @slow
     @require_torch
+    @require_auto
     def test_from_pretrained_non_contiguous_checkpoint(self):
         # See: https://github.com/huggingface/transformers/pull/28414
         # Tiny models on the Hub have contiguous weights, contrarily to google/owlvit

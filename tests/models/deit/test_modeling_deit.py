@@ -25,6 +25,7 @@ from transformers.testing_utils import (
     require_torch_accelerator,
     require_torch_fp16,
     require_vision,
+    require_auto,
     slow,
     torch_device,
 )
@@ -415,6 +416,7 @@ class DeiTModelIntegrationTest(unittest.TestCase):
     @require_accelerate
     @require_torch_accelerator
     @require_torch_fp16
+    @require_auto
     def test_inference_fp16(self):
         r"""
         A small test to make sure that inference work in half precision without any problem.
