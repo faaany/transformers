@@ -944,6 +944,7 @@ class Blip2ModelIntegrationTest(unittest.TestCase):
         self.assertEqual(predictions[1].tolist(), [0, 2335, 1556, 28, 1782, 30, 8, 2608, 1])
 
     @require_torch_multi_accelerator
+    @require_auto
     def test_inference_opt_multi_accelerator(self):
         processor = Blip2Processor.from_pretrained("Salesforce/blip2-opt-2.7b")
         model = Blip2ForConditionalGeneration.from_pretrained(
@@ -976,7 +977,6 @@ class Blip2ModelIntegrationTest(unittest.TestCase):
         self.assertEqual(generated_text, "it's not a city, it's a beach")
 
     @require_torch_multi_accelerator
-    @require_auto
     def test_inference_t5_multi_accelerator(self):
         processor = Blip2Processor.from_pretrained("Salesforce/blip2-flan-t5-xl")
         device_map = device_map = {
