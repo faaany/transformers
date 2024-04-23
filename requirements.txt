@@ -23,8 +23,9 @@ pyctcdecode==0.5.0
 timm==0.9.16
 phonemizer==3.2.1
 optimum==1.18.1
-py-cpuinfo==9.0.0
+py-cpuinfo
 deepspeed==0.14.0
 optuna==3.6.1
 sigopt==8.8.2
 onnx==1.16.0
+peft==0.10.0
