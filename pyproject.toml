@@ -54,6 +54,7 @@ markers = [
     "require_torch_neuroncore",
     "require_torch_npu",
     "torch_fx",
+    "is_staging_test",
 ]
 env = [
     "RUN_SLOW = 1",
