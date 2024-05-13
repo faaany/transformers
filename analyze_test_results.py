@@ -7,7 +7,25 @@ def main(
     excel_dir: str="",
     save_raw_df: bool=True,
 ):
+    ww14 = pd.read_excel("df_raw_all_ww14.xlsx")
+    ww14_gpu = ww14[ww14['Same as GPU?'] == 1]
+    to_save = ww14_gpu[["file_name", "suite_name", "test_name"]]
     
+    gpu_cannot_run = []
+    for _, row in to_save.iterrows():
+        suite_name = row['suite_name']
+        test_name = row['test_name']
+        gpu_cannot_run.append(f"{suite_name}::{test_name}")
+    print(f"======{len(gpu_cannot_run)}")
+    
+    # with open('gpu_can_not.txt', 'w') as f:
+    #     for _, row in to_save.iterrows():
+    #         file_name = row['file_name']
+    #         suite_name = row['suite_name']
+    #         test_name = row['test_name']
+    #         f.write(f'pytest {file_name}::{suite_name}::{test_name}\n')
+    # f.close()
+       
     # get the file path 
     benchmark = glob.glob(os.path.join(excel_dir, 'benchmark.xlsx'))
     extended = glob.glob(os.path.join(excel_dir, 'extended.xlsx'))
@@ -47,6 +65,15 @@ def main(
 
     all_df = replace_unittests(all_df)
 
+    all_df["same as gpu?"] = [0]*all_df.shape[0]
+    df_tmp = all_df[all_df["result"] == "FAILED"]
+    
+    for index, row in df_tmp.iterrows():
+        suite_name = row['suite_name']
+        test_name = row['test_name']
+        if f"{suite_name}::{test_name}" in gpu_cannot_run:
+            all_df.iloc[index, -1] = 1
+      
     if save_raw_df: 
         all_df.to_excel("df_raw_all.xlsx", index=False)
     
