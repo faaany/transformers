@@ -1,6 +1,7 @@
 import torch
 import intel_extension_for_pytorch
  
+torch.use_deterministic_algorithms(True)
 DEVICE_NAME = "xpu"
  
 MANUAL_SEED_FN = torch.xpu.manual_seed
