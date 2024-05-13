@@ -29,3 +29,4 @@ optuna==3.6.1
 sigopt==8.8.2
 onnx==1.16.0
 peft==0.10.0
+pytest-xdist==3.6.1

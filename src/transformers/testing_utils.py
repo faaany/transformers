@@ -998,7 +998,7 @@ def require_ray(test_case):
 
     """
     import pytest
-    return pytest.mark.require_detectron2()(test_case)
+    return pytest.mark.require_ray(test_case)
 
     #return unittest.skipUnless(is_ray_available(), "test requires Ray/tune")(test_case)
 
