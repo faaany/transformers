@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import unittest
+from pathlib import Path
 
 from transformers import (
     MODEL_FOR_IMAGE_TO_IMAGE_MAPPING,
@@ -23,6 +24,7 @@ from transformers import (
     pipeline,
 )
 from transformers.testing_utils import (
+    get_tests_dir,
     is_pipeline_test,
     require_torch,
     require_vision,
@@ -47,7 +49,7 @@ else:
 class ImageToImagePipelineTests(unittest.TestCase):
     model_mapping = MODEL_FOR_IMAGE_TO_IMAGE_MAPPING
     examples = [
-        Image.open("./tests/fixtures/tests_samples/COCO/000000039769.png"),
+        Image.open(Path(get_tests_dir("fixtures/tests_samples/COCO")) / "000000039769.png"),
         "http://images.cocodataset.org/val2017/000000039769.jpg",
     ]
 
